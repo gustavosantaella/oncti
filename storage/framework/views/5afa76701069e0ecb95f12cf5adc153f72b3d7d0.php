@@ -1,0 +1,1 @@
+<?php /**PATH /var/www/html/oncti/resources/views/noticias/listar.blade.php ENDPATH**/ ?>
