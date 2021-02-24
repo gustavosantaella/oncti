@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models as modelo;
-use Illuminate\Http\Request;
 use Crypt;
+use File;
+use Illuminate\Http\Request;
 class NoticiaController extends Controller
 {
 
@@ -16,9 +17,7 @@ class NoticiaController extends Controller
 	 */
 	public function list()
 	{
-		$noticias = modelo\Noticia::where('images.pertenece',modelo\Noticia::class)
-	->join('images','images.noticia_id','=','noticias.id')
-	->select('noticias.*','images.url','images.url');
+		$noticias = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->where('images.pertenece',modelo\Noticia::class)->get();
 		return view('noticias.listar',compact('noticias'));
 	}
 
@@ -48,14 +47,14 @@ class NoticiaController extends Controller
 			'state'=>['required'],
 
 		]);
-	
+
 		$count = modelo\Image::count();
 		$count++;
 		$image = $request->file('foto');
-	
+
 		$photo = str_replace($image->getClientOriginalName(),"noticia$count.png", $image->getClientOriginalName());
 		$photo = strtolower(str_replace(' ',null, $photo));
-		 $path =  public_path()."/img/dinamic";
+		$path =  public_path()."/img/dinamic";
 		$image->move($path,$photo);
 		$url = $request->root()."/img/dinamic/$photo";
 
@@ -78,7 +77,7 @@ class NoticiaController extends Controller
 		]);
 		
 
-$id = Crypt::encryptString($noticia->id);
+		$id = Crypt::encryptString($noticia->id);
 
 		return redirect("Noticia/ver/$noticia->id");
 
@@ -137,7 +136,10 @@ $id = Crypt::encryptString($noticia->id);
 	public function destroy($id)
 	{
 		$noticia = modelo\Noticia::find($id);
+		$img = modelo\Image::where('noticia_id',$id)->first();
+ $img = str_replace(request()->root(),null,$img->url);
 
+File::delete(public_path().$img);
 		$noticia->delete();
 		return redirect()->route('noticias.listar');
 	}
@@ -151,20 +153,20 @@ $id = Crypt::encryptString($noticia->id);
 
 	public function api_get_news()
 	{
-    
-   $noticias =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
-        ->where('noticias.state',true)
-        ->paginate(5);
 
-        return response()->json($noticias);
+		$noticias =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
+		->where('noticias.state',true)
+		->paginate(5);
+
+		return response()->json($noticias);
 	}
 
 	public function api_get_new($id)
 	{
-$noticia =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
-        ->where('noticias.state',true)
-        ->find($id);
+		$noticia =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
+		->where('noticias.state',true)
+		->find($id);
 
-          return response()->json($noticia);
+		return response()->json($noticia);
 	}
 }
