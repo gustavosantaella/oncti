@@ -151,8 +151,10 @@ $id = Crypt::encryptString($noticia->id);
 
 	public function api_get_news()
 	{
-        $noticias =  modelo\Noticia::where('state',true)->get();
-
+    
+   $noticias =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
+        ->where('noticias.state',true)
+        ->paginate(5);
 
         return response()->json($noticias);
 	}
