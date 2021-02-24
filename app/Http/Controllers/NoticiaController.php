@@ -153,7 +153,7 @@ $id = Crypt::encryptString($noticia->id);
 	{
     
    $noticias =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
-        // ->where('noticias.state',true)
+        ->where('noticias.state',true)
         ->paginate(5);
 
         return response()->json($noticias);
