@@ -141,4 +141,19 @@ $id = Crypt::encryptString($noticia->id);
 		$noticia->delete();
 		return redirect()->route('noticias.listar');
 	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  void
+	 * @return \Illuminate\Http\Response
+	 */
+
+	public function api_get_news()
+	{
+        $noticias =  modelo\Noticia::where('state',true)->get();
+
+
+        return response()->json($noticias);
+	}
 }
