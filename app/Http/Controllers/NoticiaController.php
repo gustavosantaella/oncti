@@ -158,4 +158,13 @@ $id = Crypt::encryptString($noticia->id);
 
         return response()->json($noticias);
 	}
+
+	public function api_get_new($id)
+	{
+$noticia =  modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
+        ->where('noticias.state',true)
+        ->find($id);
+
+          return response()->json($noticia);
+	}
 }

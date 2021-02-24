@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/user',[NoticiaController::class,'api_get_news']);
+Route::get("/noticia/{id}",[NoticiaController::class,'api_get_new']);
