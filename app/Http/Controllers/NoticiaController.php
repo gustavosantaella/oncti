@@ -7,6 +7,7 @@ use App\Models as modelo;
 use Crypt;
 use File;
 use Illuminate\Http\Request;
+use App\Http\Requests\RequestFormNew;
 class NoticiaController extends Controller
 {
 
@@ -17,7 +18,9 @@ class NoticiaController extends Controller
 	 */
 	public function list()
 	{
-		$noticias = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->where('images.pertenece',modelo\Noticia::class)->get();
+		$noticias = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
+		->where('images.pertenece',modelo\Noticia::class)
+		->paginate(5);
 		return view('noticias.listar',compact('noticias'));
 	}
 
@@ -28,7 +31,8 @@ class NoticiaController extends Controller
 	 */
 	public function create()
 	{
-		return view('noticias.create');
+		$noticia =new  modelo\Noticia;
+		return view('noticias.create',compact('noticia'));
 	}
 
 	/**
@@ -37,37 +41,24 @@ class NoticiaController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(RequestFormNew $request)
 	{
-		$this->validate($request, [
-			'titulo'=>['required','string','Min:10'],
-			'extracto'=>['required','string','Min:20'],
-			'cuerpo'=>['required','string','Min:200'],
-			'foto'=>['required','image'],
-			'state'=>['required'],
-
-		]);
-
-		$count = modelo\Image::count();
-		$count++;
-		$image = $request->file('foto');
-
-		$photo = str_replace($image->getClientOriginalName(),"noticia$count.png", $image->getClientOriginalName());
-		$photo = strtolower(str_replace(' ',null, $photo));
-		$path =  public_path()."/img/dinamic";
-		$image->move($path,$photo);
-		$url = $request->root()."/img/dinamic/$photo";
-
-
+		 $state = ((boolean)$request->state);
 		$noticia = modelo\Noticia::create([
 			'titulo'=>$request->titulo,
 			'extracto'=>$request->extracto,
 			'cuerpo'=>$request->cuerpo,
-			'state'=>$request->state,
+			'state'=>$state,
 			'fecha'=>now()
 		]); 
 
+		$image = $request->file('foto');
 
+		$photo = str_replace($image->getClientOriginalName(),"noticia$noticia->id.png", $image->getClientOriginalName());
+		$photo = strtolower(str_replace(' ',null, $photo));
+		$path =  public_path()."/img/dinamic";
+		$image->move($path,$photo);
+		$url = $request->root()."/img/dinamic/$photo";
 
 		$fotoCreate = modelo\Image::create([
 			'url'=>$url,
@@ -79,7 +70,7 @@ class NoticiaController extends Controller
 
 		$id = Crypt::encryptString($noticia->id);
 
-		return redirect("Noticia/ver/$noticia->id");
+			return redirect("Noticia/ver/$noticia->id");
 
 
 	}
@@ -93,8 +84,15 @@ class NoticiaController extends Controller
 	public function show($id)
 	{
 		// $id = (integer)Crypt::decryptString($id);
-		$noticia = modelo\Noticia::findOrfail($id);
+		$noticia = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->find($id);
 		return view('noticias.ver',compact('noticia'));
+	}
+
+	public function edit($id)
+	{
+		// $id = (integer)Crypt::decryptString($id);
+		$noticia = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->findOrfail($id);
+		return view('noticias.edit',compact('noticia','id'));
 	}
 
 	/**
@@ -106,7 +104,14 @@ class NoticiaController extends Controller
 	 */
 	public function update(Request $request,$id)
 	{
+		$this->validate($request,[
+			'titulo'=>['required','string','Min:10'],
+			'extracto'=>['required','string','Min:20'],
+			'cuerpo'=>['required','string','Min:50'],
+			'state'=>['required'],
+		]);
 		
+		echo $request->state;
 
 		$noticia =modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->find($id);
 
@@ -114,16 +119,31 @@ class NoticiaController extends Controller
 		$noticia->titulo = $request->titulo;
 		$noticia->extracto = $request->extracto;
 		$noticia->cuerpo = $request->cuerpo;
+		$noticia->state = $request->state;
 		$noticia->update();
 
-		$fotoUpdate = modelo\Image::join('noticias','noticias.id','=','images.noticia_id')->find($noticia->id);
 
-		$url = 'https://host.com/img/dinamic/fotoactualizada.png';
+		return redirect("Noticia/ver/$id");
+	}
+
+	public function updatePhoto(Request $request,$id)
+	{
+
+		$this->validate($request, [
+			'foto'=>['required','image']
+		]);
+		$fotoUpdate = modelo\Image::join('noticias','noticias.id','=','images.noticia_id')->find($id);
+
+		$image = $request->file('foto');
+
+		$photo = str_replace($image->getClientOriginalName(),"noticia$id.png", $image->getClientOriginalName());
+		$photo = strtolower(str_replace(' ',null, $photo));
+		$path =  public_path()."/img/dinamic";
+		$image->move($path,$photo);
+		$url = $request->root()."/img/dinamic/$photo";
 		$fotoUpdate->url = $url;
 
 		$fotoUpdate->update();
-
-
 		return redirect("Noticia/ver/$id");
 	}
 
@@ -137,9 +157,9 @@ class NoticiaController extends Controller
 	{
 		$noticia = modelo\Noticia::find($id);
 		$img = modelo\Image::where('noticia_id',$id)->first();
- $img = str_replace(request()->root(),null,$img->url);
+		$img = str_replace(request()->root(),null,$img->url);
 
-File::delete(public_path().$img);
+		File::delete(public_path().$img);
 		$noticia->delete();
 		return redirect()->route('noticias.listar');
 	}

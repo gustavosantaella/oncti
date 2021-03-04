@@ -86,9 +86,7 @@ public function ListNews()
 	$response = $this->get('Noticia/listar');
 	Noticia::factory()->create();
 	Image::factory()->create();
-	$noticias = Noticia::where('images.pertenece',Noticia::class)
-	->join('images','images.noticia_id','=','noticias.id')
-	->select('noticias.*','images.url','images.url');
+	$noticias = Noticia::join('images','images.noticia_id','=','noticias.id')->where('images.pertenece',Noticia::class)->get();
 
 	$response->assertOk();
 

@@ -20,7 +20,7 @@ class CreateNoticiasTable extends Migration
             $table->string('titulo');
             $table->longText('extracto');
             $table->longText('cuerpo');
-            $table->boolean('state')->nullable();
+            $table->boolean('state')/*->nullable()*/;
             $table->timestamps();
 
 
