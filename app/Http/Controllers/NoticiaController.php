@@ -32,7 +32,7 @@ class NoticiaController extends Controller
 	public function create()
 	{
 		$noticia =new  modelo\Noticia;
-		return view('noticias.create',compact('noticia'));
+		return view ('noticias.create',compact('noticia'));
 	}
 
 	/**
