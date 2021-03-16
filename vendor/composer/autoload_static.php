@@ -91,6 +91,7 @@ class ComposerStaticInitf1469b4b47c2aa827fc6a639cf26d9f8
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Sven\\ArtisanView\\' => 17,
             'Spatie\\Permission\\' => 18,
         ),
         'R' => 
@@ -318,6 +319,10 @@ class ComposerStaticInitf1469b4b47c2aa827fc6a639cf26d9f8
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Sven\\ArtisanView\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sven/artisan-view/src',
+        ),
         'Spatie\\Permission\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-permission/src',
@@ -520,11 +525,14 @@ class ComposerStaticInitf1469b4b47c2aa827fc6a639cf26d9f8
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\MakeViewCommand' => __DIR__ . '/../..' . '/app/Console/Commands/MakeViewCommand.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImageController.php',
         'App\\Http\\Controllers\\NoticiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/NoticiaController.php',
+        'App\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
+        'App\\Http\\Controllers\\RolController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -536,6 +544,7 @@ class ComposerStaticInitf1469b4b47c2aa827fc6a639cf26d9f8
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\RequestFormNew' => __DIR__ . '/../..' . '/app/Http/Requests/RequestFormNew.php',
+        'App\\Http\\Requests\\permissionRequest' => __DIR__ . '/../..' . '/app/Http/Requests/permissionRequest.php',
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\Noticia' => __DIR__ . '/../..' . '/app/Models/Noticia.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
@@ -4338,6 +4347,26 @@ class ComposerStaticInitf1469b4b47c2aa827fc6a639cf26d9f8
         'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
         'Spatie\\Permission\\WildcardPermission' => __DIR__ . '/..' . '/spatie/laravel-permission/src/WildcardPermission.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Sven\\ArtisanView\\BlockBuilder' => __DIR__ . '/..' . '/sven/artisan-view/src/BlockBuilder.php',
+        'Sven\\ArtisanView\\BlockStack' => __DIR__ . '/..' . '/sven/artisan-view/src/BlockStack.php',
+        'Sven\\ArtisanView\\Blocks\\Block' => __DIR__ . '/..' . '/sven/artisan-view/src/Blocks/Block.php',
+        'Sven\\ArtisanView\\Blocks\\Extend' => __DIR__ . '/..' . '/sven/artisan-view/src/Blocks/Extend.php',
+        'Sven\\ArtisanView\\Blocks\\InlineSection' => __DIR__ . '/..' . '/sven/artisan-view/src/Blocks/InlineSection.php',
+        'Sven\\ArtisanView\\Blocks\\Push' => __DIR__ . '/..' . '/sven/artisan-view/src/Blocks/Push.php',
+        'Sven\\ArtisanView\\Blocks\\Section' => __DIR__ . '/..' . '/sven/artisan-view/src/Blocks/Section.php',
+        'Sven\\ArtisanView\\Commands\\MakeView' => __DIR__ . '/..' . '/sven/artisan-view/src/Commands/MakeView.php',
+        'Sven\\ArtisanView\\Commands\\ScrapView' => __DIR__ . '/..' . '/sven/artisan-view/src/Commands/ScrapView.php',
+        'Sven\\ArtisanView\\Config' => __DIR__ . '/..' . '/sven/artisan-view/src/Config.php',
+        'Sven\\ArtisanView\\Destroyer' => __DIR__ . '/..' . '/sven/artisan-view/src/Destroyer.php',
+        'Sven\\ArtisanView\\Generator' => __DIR__ . '/..' . '/sven/artisan-view/src/Generator.php',
+        'Sven\\ArtisanView\\PathHelper' => __DIR__ . '/..' . '/sven/artisan-view/src/PathHelper.php',
+        'Sven\\ArtisanView\\ServiceProvider' => __DIR__ . '/..' . '/sven/artisan-view/src/ServiceProvider.php',
+        'Sven\\ArtisanView\\ViewActor' => __DIR__ . '/..' . '/sven/artisan-view/src/ViewActor.php',
+        'Sven\\ArtisanView\\Voters\\ExtendsParent' => __DIR__ . '/..' . '/sven/artisan-view/src/Voters/ExtendsParent.php',
+        'Sven\\ArtisanView\\Voters\\SectionsInParent' => __DIR__ . '/..' . '/sven/artisan-view/src/Voters/SectionsInParent.php',
+        'Sven\\ArtisanView\\Voters\\StacksFromParent' => __DIR__ . '/..' . '/sven/artisan-view/src/Voters/StacksFromParent.php',
+        'Sven\\ArtisanView\\Voters\\Voter' => __DIR__ . '/..' . '/sven/artisan-view/src/Voters/Voter.php',
+        'Sven\\ArtisanView\\Voters\\YieldsFromParent' => __DIR__ . '/..' . '/sven/artisan-view/src/Voters/YieldsFromParent.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\Color' => __DIR__ . '/..' . '/symfony/console/Color.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',

@@ -31,10 +31,29 @@ Route::group(['prefix'=>'Noticia'],function(){
 	Route::delete('eliminar/{id}',[controlador\NoticiaController::class,'destroy'])->name('noticia.eliminar');
 });
 
+/*Route admin*/
 Route::group(['prefix'=>'Admin'],function(){
 
-	Route::get('crear',[controlador\RoleController::class,'create'])->name('crear.rol');
+/*rol*/
+	Route::get('crear/rol',[controlador\RolController::class,'create'])->name('crear.rol');
+	Route::get('rol/crear',[controlador\RolController::class,'index'])->name('insertar.rol');
+	Route::post('crear',[controlador\RolController::class,'store'])->name('guardar.rol');
+	Route::get('eliminar/rol/{id}',[controlador\RolController::class,'destroy'])->name('eliminar.rol');
+	Route::get('editar/rol/{role}',[controlador\RolController::class,'show'])->name('editar.rol');
+	Route::put('editar/rol/{id}',[controlador\RolController::class,'update'])->name('update.rol');
+	Route::get('ver/rol/{role}',[controlador\RolController::class,'ver'])->name('ver.rol');
+
+/*end rol*/
+
+/*permissions*/
 	Route::get('crear/permiso',[controlador\PermissionController::class,'create'])->name('crear.permisos');
-	Route::get('listar',[controlador\PermissionController::class,'list'])->name('listar.permisos');
+	Route::post('crear/permiso',[controlador\PermissionController::class,'store'])->name('guardar.permiso');
+	Route::get('eliminar/permiso/{id}',[controlador\PermissionController::class,'destroy'])->name('eliminar.permiso');
+/*end permissions*/
+
+/*users*/
+	Route::get('crear/usuario',[controlador\UserController::class,'create'])->name('crear.user');
+	Route::post('crear/usuario',[controlador\UserController::class,'store'])->name('guardar.user');
+/*end users*/
 
 });

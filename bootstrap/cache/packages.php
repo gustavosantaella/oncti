@@ -71,4 +71,11 @@
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
+  'sven/artisan-view' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Sven\\ArtisanView\\ServiceProvider',
+    ),
+  ),
 );
