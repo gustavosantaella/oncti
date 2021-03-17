@@ -14,7 +14,7 @@
 
 {{ Form::close() }}
 
-{{ Form::model($id,['route' => ['noticia.editarFoto',$id],'files'=>'true','method'=>'put']) }}
+{{ Form::model($id,['route' => ['noticia.editarFoto',$noticia->id],'files'=>'true','method'=>'put']) }}
 <fieldset class="form-group">
 
 	<h2>Imagen actual</h2>

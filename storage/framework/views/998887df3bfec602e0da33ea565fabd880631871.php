@@ -17,7 +17,7 @@
 <?php echo e(Form::close()); ?>
 
 
-<?php echo e(Form::model($id,['route' => ['noticia.editarFoto',$id],'files'=>'true','method'=>'put'])); ?>
+<?php echo e(Form::model($id,['route' => ['noticia.editarFoto',$noticia->id],'files'=>'true','method'=>'put'])); ?>
 
 <fieldset class="form-group">
 

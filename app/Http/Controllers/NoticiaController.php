@@ -100,7 +100,7 @@ class NoticiaController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request,$id)
+	public function update(Request $request, modelo\Noticia $id)
 	{
 		$this->validate($request,[
 			'titulo'=>['required','string','Min:10'],
@@ -110,38 +110,35 @@ class NoticiaController extends Controller
 		]);
 	
 
-		$noticia =modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->find($id);
+
+		$id->titulo = $request->titulo;
+		$id->extracto = $request->extracto;
+		$id->cuerpo = $request->cuerpo;
+		$id->state = $request->state;
+		$id->update();
 
 
-		$noticia->titulo = $request->titulo;
-		$noticia->extracto = $request->extracto;
-		$noticia->cuerpo = $request->cuerpo;
-		$noticia->state = $request->state;
-		$noticia->update();
-
-
-		return redirect("Noticia/ver/$id");
+		return redirect("Noticia/ver/$id->id");
 	}
 
-	public function updatePhoto(Request $request,$id)
+	public function updatePhoto(Request $request,modelo\Image $id)
 	{
-
 		$this->validate($request, [
 			'foto'=>['required','image']
 		]);
-		$fotoUpdate = modelo\Image::join('noticias','noticias.id','=','images.noticia_id')->find($id);
+	/*	$fotoUpdate = modelo\Image::join('noticias','noticias.id','=','images.noticia_id')->find($id);*/
 
 		$image = $request->file('foto');
 
-		$photo = str_replace($image->getClientOriginalName(),"noticia$id.png", $image->getClientOriginalName());
+		$photo = str_replace($image->getClientOriginalName(),"noticia$id->noticia_id.png", $image->getClientOriginalName());
 		$photo = strtolower(str_replace(' ',null, $photo));
 		$path =  public_path()."/img/dinamic";
 		$image->move($path,$photo);
 		$url = $request->root()."/img/dinamic/$photo";
-		$fotoUpdate->url = $url;
+		$id->url = $url;
 
-		$fotoUpdate->update();
-		return redirect("Noticia/ver/$id");
+		$id->update();
+		return redirect("Noticia/ver/$id->noticia_id");
 	}
 
 	/**
