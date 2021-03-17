@@ -31,7 +31,7 @@
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#"><?php echo e(Auth::user()->username); ?></a>
-          
+
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo e(route('logout')); ?>">Cerrar sesión</a>
                     </div>
@@ -49,44 +49,70 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interfaces</div>
-                           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(['listar noticias','modificar noticia','eliminar noticia'])): ?>
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
+
+                            <?php if(Auth::user()->can('crear noticia')  ||
+                             Auth::user()->can('listar noticias')    ||
+                             Auth::user()->can('eliminar noticia')  || 
+                             Auth::user()->can('modificar noticia') || 
+                             Auth::user()->can('ver noticia')): ?>
+                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Noticias oncti
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="noticias" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                            
-                                  <a class="nav-link" href="<?php echo e(route('noticia.crear')); ?>">Agregar noticias</a>
+                                   <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('crear noticia')): ?>
+                                   <a class="nav-link" href="<?php echo e(route('noticia.crear')); ?>">Agregar noticias</a>
 
-                              
-                                  <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('listar noticias')): ?>
-                                   <a class="nav-link" href="<?php echo e(route('noticias.listar')); ?>">Listar noticias</a>
-                                  <?php endif; ?>
+                                   <?php endif; ?>
+                                   <?php if(
+                                    Auth::user()->can('listar noticias')   ||
+                                    Auth::user()->can('eliminar noticia')  || 
+                                    Auth::user()->can('modificar noticia') || 
+                                    Auth::user()->can('ver noticia')): ?>
+                                    <a class="nav-link" href="<?php echo e(route('noticias.listar')); ?>">Listar noticias</a>
+                                    <?php endif; ?>
                                 </nav>
                             </div>
-                           <?php endif; ?>
+                            <?php endif; ?>
 
+
+                            <?php if(auth()->check() && auth()->user()->hasRole('TIC')): ?>
                             <a class="nav-link collapsed"  href="<?php echo e(route('crear.permisos')); ?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Permisos
 
                             </a>
+                            <?php endif; ?>
 
-                            <a class="nav-link collapsed"  href="<?php echo e(route('crear.rol')); ?>">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Roles
-                                
-                            </a>
-                            
-                            <a class="nav-link collapsed"  href="<?php echo e(route('listar.users')); ?>">
-                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                                Usuarios
-                                
-                            </a>
-                            
+                            <?php if(
+                                Auth::user()->can('crear rol')   ||
+                                Auth::user()->can('eliminar rol')  || 
+                                Auth::user()->can('modificar rol') || 
+                                Auth::user()->can('ver rol')
+                                ): ?>
+                                <a class="nav-link collapsed"  href="<?php echo e(route('crear.rol')); ?>">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Roles
 
+                                </a>
+                                <?php endif; ?>
+
+
+                                <?php if(
+                                    Auth::user()->can('crear usuario')   ||
+                                    Auth::user()->can('eliminar usuario')  || 
+                                    Auth::user()->can('modificar usuario') || 
+                                    Auth::user()->can('listar usuarios')
+                                    ): ?>
+                                    <a class="nav-link collapsed"  href="<?php echo e(route('listar.users')); ?>">
+                                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                        Usuarios
+
+                                    </a>
+
+                                    <?php endif; ?>
                             
                         </div>
                     </div>

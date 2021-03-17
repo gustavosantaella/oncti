@@ -28,18 +28,23 @@
 			<td class="text-center"> <i class="fas fa-times text-danger"></i></td>
 			<?php endif; ?>
 
+			<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('modificar noticia')): ?>
 			<td class="text-center">
 				<a href="<?php echo e(route('ver.edit',$e->id)); ?>" class="text-decoration-none btn btn-warning font-weight-bold" title="Eliminar noticia">
 					Editar
 				</a>
 			</td>
 
+			<?php endif; ?>
+			<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ver noticia')): ?>
 			<td class="text-center">
 				<a href="<?php echo e(route('ver.noticia',$e->id)); ?>" class="text-decoration-none btn btn-light font-weight-bold" title="Ver noticia">
 					Vista previa
 				</a>
 			</td>
-
+			<?php endif; ?>
+			<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('eliminar noticia')): ?>
+			
 			<td class="text-center">
 				<form action="<?php echo e(route('noticia.eliminar',$e->id)); ?>" method="POST">
 					<?php echo csrf_field(); ?>
@@ -48,6 +53,7 @@
 
 				</form>
 			</td>
+			<?php endif; ?>
 		</tr>
 		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 	</tbody>

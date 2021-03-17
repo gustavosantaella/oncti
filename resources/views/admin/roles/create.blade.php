@@ -4,9 +4,11 @@
 
 	@include('partials.errors')
 	<div class="card-body">
+		@can('crear rol')
 		<div class="text-right">
 			<a class="btn btn-primary font-weight-bold" href="{{ route('insertar.rol') }}">Crear rol</a>
 		</div>
+		@endcan
 		<hr>
 		<div >
 			<table id="example" class="table table-responsive table-hover" >
@@ -28,9 +30,15 @@
 						{{-- <td width='25%'>{{ $rol->created_at }}</td>
 						<td width='25%'>{{ $rol->updated_at }}</td> --}}
 						<td class="text-center" width='50%'>
-							<a href="{{ route('eliminar.rol',$rol->id) }}" class="btn btn-danger font-weight-bold" title="">Eliminar</a>
+							@can('eliminar rol')
+								<a href="{{ route('eliminar.rol',$rol->id) }}" class="btn btn-danger font-weight-bold" title="">Eliminar</a>
+							@endcan
+							@can('modificar rol')
 							<a href="{{ route('editar.rol',$rol->id)}}" class="btn btn-warning font-weight-bold" title="">Editar</a>
+							@endcan
+							@can('ver rol')
 							<a href="{{ route('ver.rol',$rol->id)}}" class="btn btn-secondary font-weight-bold" title="">Ver</a>
+							@endcan
 						</td>
 					</tr>
 					@endforeach

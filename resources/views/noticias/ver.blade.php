@@ -2,7 +2,11 @@
 @section('content')
 <div class="">
 
+	@can('crear noticia')
 	<a href="{{ route('noticia.crear') }}" class=" font-weight-bold btn btn-primary small ">Seguir agregando</a>
+	@endcan
+	
+	@can('modificar noticia')
 	@if ($noticia->state)
 	<div class=" font-weight-bold alert-success rounded-top rounded-right rounded-left rounded-bottom p-2 mt-4">
 		Estado: publicada.
@@ -13,6 +17,7 @@
 		Estado: Borrador, cambia el estado de la notica <a href="{{ route('ver.edit',$noticia->noticia_id) }}" title="Editar noticia" class="text-decoration-none">Aqui</a>.
 	</div>
 	@endif
+	@endcan
 </div>
 <div class="card border-light">
 	<div class="card-header bg-transparent border-light font-weight-bold">Noticia #{{ $noticia->noticia_id }}</div>

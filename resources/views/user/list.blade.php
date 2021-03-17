@@ -4,9 +4,11 @@
 <div class="card">
 
 	<div class="card-body">
+		@can('crear usuario')
 		<div class="text-right">
 			<a class="btn btn-primary font-weight-bold" href="{{ route('crear.user') }}">Crear usuario</a>
 		</div>
+		@endcan
 		<hr>
 		<div >
 			<table id="example" class="table table-responsive table-hover" >
@@ -32,8 +34,16 @@
 
 						@endif
 						<td class="text-center" width='25%'>
-							<a href="{{ route('eliminar.user',$user->id) }}" class="btn btn-danger font-weight-bold" title="">Eliminar</a>
-							<a href="{{ route('editar.user',$user->id) }}" class="btn btn-warning font-weight-bold" title="">Editar</a>
+							@can('eliminar usuario')
+							@if ($user->username !=='tecnologia')
+								<a href="{{ route('eliminar.user',$user->id) }}" class="btn btn-danger font-weight-bold" title="">Eliminar</a>
+							@endif
+							@endcan
+							@can('modificar usuario')
+							@if ($user->username !=='tecnologia')
+								<a href="{{ route('editar.user',$user->id) }}" class="btn btn-warning font-weight-bold" title="">Editar</a>
+							@endif
+							@endcan
 						</td>
 					</tr>
 					@endforeach

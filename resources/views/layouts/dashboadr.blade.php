@@ -31,7 +31,7 @@
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#">{{ Auth::user()->username }}</a>
-          
+
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}">Cerrar sesión</a>
                     </div>
@@ -49,44 +49,70 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interfaces</div>
-                           @can(['listar noticias','modificar noticia','eliminar noticia'])
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
+
+                            @if (Auth::user()->can('crear noticia')  ||
+                             Auth::user()->can('listar noticias')    ||
+                             Auth::user()->can('eliminar noticia')  || 
+                             Auth::user()->can('modificar noticia') || 
+                             Auth::user()->can('ver noticia'))
+                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Noticias oncti
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="noticias" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                            {{--      @can('crear noticia') --}}
-                                  <a class="nav-link" href="{{ route('noticia.crear') }}">Agregar noticias</a>
+                                   @can('crear noticia')
+                                   <a class="nav-link" href="{{ route('noticia.crear') }}">Agregar noticias</a>
 
-                              {{--    @endcan --}}
-                                  @can('listar noticias')
-                                   <a class="nav-link" href="{{ route('noticias.listar') }}">Listar noticias</a>
-                                  @endcan
+                                   @endcan
+                                   @if (
+                                    Auth::user()->can('listar noticias')   ||
+                                    Auth::user()->can('eliminar noticia')  || 
+                                    Auth::user()->can('modificar noticia') || 
+                                    Auth::user()->can('ver noticia'))
+                                    <a class="nav-link" href="{{ route('noticias.listar') }}">Listar noticias</a>
+                                    @endif
                                 </nav>
                             </div>
-                           @endcan
+                            @endif
 
+
+                            @role('TIC')
                             <a class="nav-link collapsed"  href="{{ route('crear.permisos') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Permisos
 
                             </a>
+                            @endrole
 
-                            <a class="nav-link collapsed"  href="{{ route('crear.rol') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Roles
-                                
-                            </a>
-                            
-                            <a class="nav-link collapsed"  href="{{ route('listar.users') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                                Usuarios
-                                
-                            </a>
-                            
+                            @if (
+                                Auth::user()->can('crear rol')   ||
+                                Auth::user()->can('eliminar rol')  || 
+                                Auth::user()->can('modificar rol') || 
+                                Auth::user()->can('ver rol')
+                                )
+                                <a class="nav-link collapsed"  href="{{ route('crear.rol') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Roles
 
+                                </a>
+                                @endif
+
+
+                                @if (
+                                    Auth::user()->can('crear usuario')   ||
+                                    Auth::user()->can('eliminar usuario')  || 
+                                    Auth::user()->can('modificar usuario') || 
+                                    Auth::user()->can('listar usuarios')
+                                    )
+                                    <a class="nav-link collapsed"  href="{{ route('listar.users') }}">
+                                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                        Usuarios
+
+                                    </a>
+
+                                    @endif
                             {{-- <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -28,18 +28,23 @@
 			<td class="text-center"> <i class="fas fa-times text-danger"></i></td>
 			@endif
 
+			@can('modificar noticia')
 			<td class="text-center">
 				<a href="{{ route('ver.edit',$e->id) }}" class="text-decoration-none btn btn-warning font-weight-bold" title="Eliminar noticia">
 					Editar
 				</a>
 			</td>
 
+			@endcan
+			@can('ver noticia')
 			<td class="text-center">
 				<a href="{{ route('ver.noticia',$e->id) }}" class="text-decoration-none btn btn-light font-weight-bold" title="Ver noticia">
 					Vista previa
 				</a>
 			</td>
-
+			@endcan
+			@can('eliminar noticia')
+			
 			<td class="text-center">
 				<form action="{{ route('noticia.eliminar',$e->id) }}" method="POST">
 					@csrf
@@ -47,6 +52,7 @@
 					{!! Form::submit('Eliminar', ['class'=>'btn btn-danger font-weight-bold']) !!}
 				</form>
 			</td>
+			@endcan
 		</tr>
 		@endforeach
 	</tbody>
