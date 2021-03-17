@@ -18,9 +18,7 @@ class NoticiaController extends Controller
 	 */
 	public function list()
 	{
-		$noticias = modelo\Noticia::join('images','images.noticia_id','=','noticias.id')
-		->where('images.pertenece',modelo\Noticia::class)
-		->paginate(5);
+		$noticias = modelo\Noticia::paginate(5);
 		return view('noticias.listar',compact('noticias'));
 	}
 

@@ -15,7 +15,7 @@
 	<?php endif; ?>
 </div>
 <div class="card border-light">
-	<div class="card-header bg-transparent border-light font-weight-bold">Noticia #<?php echo e($noticia->id); ?></div>
+	<div class="card-header bg-transparent border-light font-weight-bold">Noticia #<?php echo e($noticia->noticia_id); ?></div>
 	<div class="card-body text-center">
 		<div class="card-img img-fluid">
 			<img src="<?php echo e($noticia->url); ?>" class="img-fluid" alt="">			
