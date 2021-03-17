@@ -57,10 +57,10 @@
                             </a>
                             <div class="collapse" id="noticias" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('crear noticia')): ?>
+                            
                                   <a class="nav-link" href="<?php echo e(route('noticia.crear')); ?>">Agregar noticias</a>
 
-                                 <?php endif; ?>
+                              
                                   <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('listar noticias')): ?>
                                    <a class="nav-link" href="<?php echo e(route('noticias.listar')); ?>">Listar noticias</a>
                                   <?php endif; ?>

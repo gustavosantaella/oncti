@@ -13,6 +13,7 @@
 				<thead>
 					<th class="text-center">#</th>
 					<th class="text-center"width='25%'>Nombre</th>
+					<th class="text-center"width='25%'>Usuario</th>
 					<th class="text-center"width='25%'>Estado</th>
 					<th  class="text-center"width='25%'>Opciones</th>
 				</thead>
@@ -22,6 +23,7 @@
 					<tr>
 						<td>{{ $user->id }}</td>
 						<td width='25%'>{{ $user->name }} {{ $user->lastname }}</td>
+						<td width='25%'>{{ $user->username }}</td>
 						@if ($user->state)
 						<td width="25%" class="text-center"><i class="fas fa-check text-success"></i></td>
 						@else

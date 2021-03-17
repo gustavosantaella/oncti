@@ -57,10 +57,10 @@
                             </a>
                             <div class="collapse" id="noticias" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                 @can('crear noticia')
+                            {{--      @can('crear noticia') --}}
                                   <a class="nav-link" href="{{ route('noticia.crear') }}">Agregar noticias</a>
 
-                                 @endcan
+                              {{--    @endcan --}}
                                   @can('listar noticias')
                                    <a class="nav-link" href="{{ route('noticias.listar') }}">Listar noticias</a>
                                   @endcan

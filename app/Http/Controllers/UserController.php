@@ -97,7 +97,7 @@ class UserController extends Controller
 
 		if (!$user) {
 
-			return 'error';
+			return redirect()->back()->with('message','Alguno de los campos es incorrecto')->with('type','warning');
 		}
 
 		$request->session()->regenerate();
