@@ -24,7 +24,7 @@ class rolRequest extends FormRequest
     public function rules()
     {
         return [
-           'name'=>['required','string','unique:roles,name'],
+           'name'=>['required','string','unique:roles,name','alpha'],
            /*'permission'=>['required']*/
         ];
     }

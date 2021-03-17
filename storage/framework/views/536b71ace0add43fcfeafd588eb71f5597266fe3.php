@@ -14,7 +14,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="<?php echo e(route('welcome')); ?>">Panel de control</a>
+        <a class="navbar-brand" href="<?php echo e(route('welcome')); ?>">Panel de control </a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -30,10 +30,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Activity Log</a>
+                        <a class="dropdown-item" href="#"><?php echo e(Auth::user()->username); ?></a>
+          
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login.html">Cerrar sesión</a>
+                        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>">Cerrar sesión</a>
                     </div>
                 </li>
             </ul>
@@ -49,17 +49,24 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interfaces</div>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
+                           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(['listar noticias','modificar noticia','eliminar noticia'])): ?>
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#noticias" aria-expanded="false" aria-controls="noticias">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Noticias oncti
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="noticias" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<?php echo e(route('noticia.crear')); ?>">Agregar noticias</a>
-                                    <a class="nav-link" href="<?php echo e(route('noticias.listar')); ?>">Listar noticias</a>
+                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('crear noticia')): ?>
+                                  <a class="nav-link" href="<?php echo e(route('noticia.crear')); ?>">Agregar noticias</a>
+
+                                 <?php endif; ?>
+                                  <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('listar noticias')): ?>
+                                   <a class="nav-link" href="<?php echo e(route('noticias.listar')); ?>">Listar noticias</a>
+                                  <?php endif; ?>
                                 </nav>
                             </div>
+                           <?php endif; ?>
 
                             <a class="nav-link collapsed"  href="<?php echo e(route('crear.permisos')); ?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -73,7 +80,7 @@
                                 
                             </a>
                             
-                            <a class="nav-link collapsed"  href="<?php echo e(route('crear.rol')); ?>">
+                            <a class="nav-link collapsed"  href="<?php echo e(route('listar.users')); ?>">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
                                 

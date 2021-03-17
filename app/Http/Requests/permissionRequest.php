@@ -24,7 +24,7 @@ class permissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','string','Min:5']
+            'name'=>['required','string','Min:5','alpha']
         ];
     }
 }

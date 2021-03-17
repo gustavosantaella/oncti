@@ -110,8 +110,7 @@ class NoticiaController extends Controller
 			'cuerpo'=>['required','string','Min:50'],
 			'state'=>['required'],
 		]);
-		
-		echo $request->state;
+	
 
 		$noticia =modelo\Noticia::join('images','images.noticia_id','=','noticias.id')->find($id);
 
